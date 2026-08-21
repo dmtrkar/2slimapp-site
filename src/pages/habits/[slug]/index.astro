@@ -1,0 +1,108 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const habits = await getCollection('habits');
+  return habits.map((habit) => ({
+    params: { slug: habit.data.slug },
+    props: { habit },
+  }));
+}
+
+const { habit } = Astro.props;
+const { Content } = await render(habit);
+---
+<BaseLayout title={habit.data.title} description={habit.data.dek}>
+  <div class="hero-plate">
+    <img src={`/images/habits/${habit.data.slug}.jpg`} alt={habit.data.imageAlt} />
+    <div class="overlay"></div>
+  </div>
+
+  <p class="eyebrow">{habit.data.tag} · {habit.data.title}</p>
+  <h1 class="headline">{habit.data.title}</h1>
+  <p class="dek">{habit.data.dek}</p>
+
+  <hr class="rule" />
+
+  <div class="content">
+    <Content />
+  </div>
+
+  <p class="back-link"><a href="/habits/">&larr; All habits</a></p>
+
+  <style>
+    .hero-plate {
+      position: relative;
+      min-height: 260px;
+      color: var(--sand);
+      margin-bottom: 40px;
+      overflow: hidden;
+    }
+    .hero-plate img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero-plate .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(31,42,42,0) 40%, rgba(31,42,42,0.4) 100%);
+    }
+    .eyebrow {
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--clay);
+      font-weight: 600;
+      margin: 0 0 18px;
+    }
+    .headline {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      line-height: 1.16;
+      font-weight: 500;
+      margin: 0 0 20px;
+      color: var(--ink);
+    }
+    .dek {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.12rem;
+      line-height: 1.5;
+      color: var(--muted);
+      margin: 0 0 36px;
+      max-width: 56ch;
+    }
+    hr.rule { border: none; border-top: 1px solid var(--hair); margin: 0 0 36px; }
+    .content :global(p) {
+      font-family: var(--font-serif);
+      font-size: 1.08rem;
+      line-height: 1.75;
+      color: var(--ink);
+      margin: 0 0 26px;
+    }
+    .content :global(h2) {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin: 40px 0 18px;
+    }
+    .back-link {
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid var(--hair);
+    }
+    .back-link a {
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .back-link a:hover { color: var(--ink); }
+  </style>
+</BaseLayout>

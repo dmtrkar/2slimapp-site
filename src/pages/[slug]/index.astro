@@ -16,7 +16,7 @@ const { Content } = await render(article);
 <BaseLayout title={article.data.title} description={article.data.description}>
   <article>
     <h1>{article.data.title}</h1>
-    <p class="meta">{article.data.date.toLocaleDateString('ru-RU')}</p>
+    <p class="meta">{article.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
     {article.data.image && <img src={article.data.image} alt={article.data.imageAlt} />}
     <div class="content">
       <Content />

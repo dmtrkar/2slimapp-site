@@ -1,8 +1,8 @@
 ---
-title: "Добро пожаловать в блог 2Slim"
-description: "Первая статья — заглушка, будет заменена реальным контентом."
+title: "Welcome to the 2Slim Blog"
+description: "A first post — placeholder, will be replaced with real content."
 date: 2026-08-20
 slug: "welcome"
 ---
 
-Это тестовая статья, чтобы проверить, что сборка сайта работает. Скоро здесь появятся настоящие статьи, основанные на данных из отзывов конкурентов, Reddit и семантического ядра 2Slim.
+This is a test post to confirm the site builds correctly. Real articles are coming soon, based on data collected from competitor reviews, Reddit discussions, and 2Slim's keyword research.

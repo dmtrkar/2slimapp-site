@@ -1,0 +1,75 @@
+---
+import { getCollection } from 'astro:content';
+
+const ICONS: Record<string, string> = {
+  nutrition: '<circle cx="12" cy="12" r="9"/><path d="M12 3v18"/>',
+  water: '<path d="M12 3C12 3 5 11 5 15a7 7 0 0014 0c0-4-7-12-7-12z"/>',
+  activity: '<circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/>',
+  sleep: '<path d="M20 14.5A8.5 8.5 0 1110 3a7 7 0 0010 11.5z"/>',
+  'weigh-in': '<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="12" r="3.5"/>',
+  stress: '<path d="M4 20C4 12 10 4 20 4c0 8-6 14-16 14z"/><path d="M4 20L14 10"/>',
+};
+
+const habits = (await getCollection('habits')).sort((a, b) => a.data.order - b.data.order);
+---
+<div class="habits-grid">
+  {habits.map((habit) => (
+    <a class="habit-tile" href={`/habits/${habit.data.slug}/`}>
+      <img class="thumb" src={`/images/habits/${habit.data.slug}-thumb.jpg`} alt={habit.data.imageAlt} loading="lazy" />
+      <div class="label">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={ICONS[habit.data.slug]} />
+        <div>
+          <div class="tag">{habit.data.tag}</div>
+          <div class="name">{habit.data.title}</div>
+        </div>
+      </div>
+    </a>
+  ))}
+</div>
+<style>
+  .habits-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .habit-tile {
+    display: flex;
+    flex-direction: column;
+    background: var(--paper);
+    border: 1px solid var(--hair);
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+  }
+  .habit-tile .thumb {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+  .habit-tile .label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+  }
+  .habit-tile .icon { width: 18px; height: 18px; stroke: var(--clay); flex-shrink: 0; }
+  .habit-tile .name {
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .habit-tile .tag {
+    font-family: var(--font-sans);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 2px;
+  }
+  @media (max-width: 640px) {
+    .habits-grid { grid-template-columns: repeat(2, 1fr); }
+    .habit-tile .name { font-size: 0.88rem; }
+  }
+</style>

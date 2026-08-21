@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HabitsGrid from '../../components/HabitsGrid.astro';
+---
+<BaseLayout title="Habits" description="The five daily habits behind 2Slim, plus the optional Stress check-in." wide>
+  <p class="kicker">5 Habits of Slim People</p>
+  <h1 class="page-headline">The habits, one at a time</h1>
+  <p class="page-dek">No diet, no calorie counting — just five small habits tracked side by side, plus an optional Stress check-in for the days feelings drive the plate more than hunger does.</p>
+
+  <HabitsGrid />
+
+  <style>
+    .kicker {
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--clay);
+      font-weight: 600;
+      margin: 0 0 14px;
+    }
+    .page-headline {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      line-height: 1.18;
+      font-weight: 500;
+      margin: 0 0 16px;
+      color: var(--ink);
+    }
+    .page-dek {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: var(--muted);
+      margin: 0 0 40px;
+      max-width: 62ch;
+    }
+  </style>
+</BaseLayout>

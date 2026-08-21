@@ -3,10 +3,11 @@ interface Props {
   title: string;
   description?: string;
 }
-const { title, description = '2Slim — 5 привычек стройности без диет' } = Astro.props;
+const { title, description = '2Slim — 5 Habits of Slim People. No diet, natural weight loss.' } = Astro.props;
+const APP_STORE_URL = 'https://apps.apple.com/app/id1524615454';
 ---
 <!doctype html>
-<html lang="ru">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,15 +20,28 @@ const { title, description = '2Slim — 5 привычек стройности 
     <header class="site-header">
       <a class="brand" href="/">2Slim <span>Blog</span></a>
       <nav>
-        <a href="/">Статьи</a>
+        <a href="/">Articles</a>
       </nav>
     </header>
     <main>
       <slot />
     </main>
+    <section class="app-cta">
+      <div class="app-cta-text">
+        <p class="app-cta-title">Try 2Slim</p>
+        <p class="app-cta-desc">5 simple daily habits. No calorie counting, no diets.</p>
+        <a class="app-store-badge" href={APP_STORE_URL} target="_blank" rel="noopener">
+          <span>
+            <small>Download on the</small>
+            <strong>App Store</strong>
+          </span>
+        </a>
+      </div>
+      <img class="app-cta-qr" src="/app-qr.png" width="120" height="120" alt="QR code to download 2Slim on the App Store" loading="lazy" />
+    </section>
     <footer class="site-footer">
       <p>&copy; {new Date().getFullYear()} 2Slim.
-        <a href="https://dmtrkar.github.io/2slim/">Поддержка и политика конфиденциальности</a>
+        <a href="https://dmtrkar.github.io/2slim/">Support &amp; Privacy Policy</a>
       </p>
     </footer>
     <style is:global>
@@ -67,6 +81,36 @@ const { title, description = '2Slim — 5 привычек стройности 
       a { color: var(--teal); }
       h1, h2, h3 { line-height: 1.25; }
       img { max-width: 100%; border-radius: 12px; }
+      .app-cta {
+        max-width: 760px;
+        margin: 1rem auto 0;
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+        background: #f0ebe0;
+        border-radius: 16px;
+      }
+      .app-cta-title { margin: 0 0 0.25rem; font-weight: 700; color: var(--ink); }
+      .app-cta-desc { margin: 0 0 0.9rem; color: var(--muted); font-size: 0.9rem; }
+      .app-store-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--ink);
+        color: #fff;
+        text-decoration: none;
+        padding: 0.55rem 1rem;
+        border-radius: 10px;
+      }
+      .app-store-badge:hover { opacity: 0.9; }
+      .app-store-badge small { display: block; font-size: 0.65rem; line-height: 1; opacity: 0.85; }
+      .app-store-badge strong { display: block; font-size: 1rem; line-height: 1.2; }
+      .app-cta-qr { border-radius: 8px; flex-shrink: 0; }
+      @media (max-width: 560px) {
+        .app-cta { flex-direction: column; text-align: center; }
+      }
     </style>
   </body>
 </html>

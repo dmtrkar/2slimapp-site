@@ -2,8 +2,9 @@
 interface Props {
   title: string;
   description?: string;
+  wide?: boolean;
 }
-const { title, description = '2Slim — 5 Habits of Slim People. No diet, natural weight loss.' } = Astro.props;
+const { title, description = '2Slim — 5 Habits of Slim People. No diet, natural weight loss.', wide = false } = Astro.props;
 const APP_STORE_URL = 'https://apps.apple.com/app/id1524615454';
 ---
 <!doctype html>
@@ -17,83 +18,96 @@ const APP_STORE_URL = 'https://apps.apple.com/app/id1524615454';
     <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
   <body>
-    <header class="site-header">
-      <a class="brand" href="/">2Slim <span>Blog</span></a>
-      <nav>
-        <a href="/">Articles</a>
-      </nav>
-    </header>
-    <main>
-      <slot />
-    </main>
-    <section class="app-cta">
-      <div class="app-cta-text">
-        <p class="app-cta-title">Try 2Slim</p>
-        <p class="app-cta-desc">5 simple daily habits. No calorie counting, no diets.</p>
-        <a class="app-store-badge" href={APP_STORE_URL} target="_blank" rel="noopener">
-          <span>
-            <small>Download on the</small>
-            <strong>App Store</strong>
-          </span>
-        </a>
-      </div>
-      <img class="app-cta-qr" src="/app-qr.png" width="120" height="120" alt="QR code to download 2Slim on the App Store" loading="lazy" />
-    </section>
-    <footer class="site-footer">
-      <p>&copy; {new Date().getFullYear()} 2Slim.
-        <a href="https://dmtrkar.github.io/2slim/">Support &amp; Privacy Policy</a>
-      </p>
-    </footer>
+    <div class:list={["page", { wide }]}>
+      <header class="site-header">
+        <a class="brand" href="/">2Slim<em>Blog</em></a>
+        <nav>
+          <a href="/">Articles</a>
+          <a href="/habits/">Habits</a>
+        </nav>
+      </header>
+      <main>
+        <slot />
+      </main>
+      <section class="app-cta">
+        <div>
+          <p class="app-cta-title">Try 2Slim</p>
+          <p class="app-cta-desc">5 simple daily habits. No calorie counting, no diets.</p>
+          <a class="app-store-badge" href={APP_STORE_URL} target="_blank" rel="noopener">
+            <span>
+              <small>Download on the</small>
+              <strong>App Store</strong>
+            </span>
+          </a>
+        </div>
+        <img class="app-cta-qr" src="/app-qr.png" width="96" height="96" alt="QR code to download 2Slim on the App Store" loading="lazy" />
+      </section>
+      <footer class="site-footer">
+        <p>&copy; {new Date().getFullYear()} 2Slim. <a href="https://dmtrkar.github.io/2slim/">Support &amp; Privacy Policy</a></p>
+      </footer>
+    </div>
     <style is:global>
       :root {
         --teal: #4a9e9e;
         --ink: #1f2a2a;
         --paper: #fbfaf7;
         --muted: #6b7a7a;
+        --clay: #b9714a;
+        --sand: #f2ede1;
+        --hair: #e2dbcb;
+        --font-serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+        --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif;
       }
       * { box-sizing: border-box; }
-      body {
+      html, body {
         margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background: var(--sand);
         color: var(--ink);
-        background: var(--paper);
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
         line-height: 1.6;
       }
+      .page { max-width: 720px; margin: 0 auto; padding: 0 24px 64px; }
+      .page.wide { max-width: 900px; }
+      img { max-width: 100%; display: block; }
+
+      /* header */
       .site-header {
         display: flex;
+        align-items: baseline;
         justify-content: space-between;
-        align-items: center;
-        padding: 1.25rem 1.5rem;
-        border-bottom: 1px solid #e7e2d8;
+        padding: 40px 0 32px;
+        gap: 16px;
       }
-      .brand { font-weight: 700; font-size: 1.25rem; color: var(--ink); text-decoration: none; }
-      .brand span { color: var(--teal); }
-      nav a { color: var(--muted); text-decoration: none; margin-left: 1rem; }
-      main { max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
-      .site-footer {
-        text-align: center;
-        padding: 2rem 1.5rem;
+      .brand { font-family: var(--font-serif); font-weight: 700; font-size: 1.4rem; color: var(--ink); text-decoration: none; }
+      .brand em { font-style: normal; color: var(--teal); font-weight: 400; margin-left: 0.3em; }
+      .site-header nav { display: flex; gap: 20px; }
+      .site-header nav a {
+        font-family: var(--font-sans);
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
         color: var(--muted);
-        font-size: 0.875rem;
-        border-top: 1px solid #e7e2d8;
+        text-decoration: none;
       }
-      .site-footer a { color: var(--teal); }
-      a { color: var(--teal); }
+      .site-header nav a:hover { color: var(--ink); }
+
       h1, h2, h3 { line-height: 1.25; }
-      img { max-width: 100%; border-radius: 12px; }
+      a { color: var(--teal); }
+
+      /* cta */
       .app-cta {
-        max-width: 760px;
-        margin: 1rem auto 0;
-        padding: 1.5rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 1.5rem;
-        background: #f0ebe0;
-        border-radius: 16px;
+        gap: 24px;
+        padding: 32px;
+        margin: 8px 0 0;
+        background: var(--paper);
+        border: 1px solid var(--hair);
       }
-      .app-cta-title { margin: 0 0 0.25rem; font-weight: 700; color: var(--ink); }
-      .app-cta-desc { margin: 0 0 0.9rem; color: var(--muted); font-size: 0.9rem; }
+      .app-cta-title { font-family: var(--font-serif); font-size: 1.25rem; margin: 0 0 8px; color: var(--ink); }
+      .app-cta-desc { margin: 0 0 16px; color: var(--muted); font-size: 0.9rem; }
       .app-store-badge {
         display: inline-flex;
         align-items: center;
@@ -101,13 +115,22 @@ const APP_STORE_URL = 'https://apps.apple.com/app/id1524615454';
         background: var(--ink);
         color: #fff;
         text-decoration: none;
-        padding: 0.55rem 1rem;
-        border-radius: 10px;
+        padding: 0.6rem 1.1rem;
       }
       .app-store-badge:hover { opacity: 0.9; }
-      .app-store-badge small { display: block; font-size: 0.65rem; line-height: 1; opacity: 0.85; }
-      .app-store-badge strong { display: block; font-size: 1rem; line-height: 1.2; }
-      .app-cta-qr { border-radius: 8px; flex-shrink: 0; }
+      .app-store-badge small { display: block; font-size: 0.63rem; line-height: 1; opacity: 0.8; }
+      .app-store-badge strong { display: block; font-size: 0.98rem; line-height: 1.25; font-family: var(--font-sans); font-weight: 600; }
+      .app-cta-qr { flex-shrink: 0; border: 1px solid var(--hair); }
+
+      /* footer */
+      .site-footer {
+        text-align: center;
+        padding: 40px 0 0;
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+      .site-footer a { color: var(--teal); text-decoration: none; border-bottom: 1px solid currentColor; }
+
       @media (max-width: 560px) {
         .app-cta { flex-direction: column; text-align: center; }
       }

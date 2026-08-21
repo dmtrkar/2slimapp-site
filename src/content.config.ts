@@ -13,4 +13,16 @@ const articles = defineCollection({
   }),
 });
 
-export const collections = { articles };
+const habits = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/habits' }),
+  schema: z.object({
+    title: z.string(),
+    tag: z.string(),
+    dek: z.string(),
+    imageAlt: z.string(),
+    order: z.number(),
+    slug: z.string(),
+  }),
+});
+
+export const collections = { articles, habits };

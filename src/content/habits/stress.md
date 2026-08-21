@@ -15,4 +15,4 @@ Instead of a single stress rating, the check-in logs five specific triggers — 
 
 ## Optional, and worth it on the right days
 
-Stress won't show up on every day's log, and it doesn't need to. On the days it does, it tends to explain a lot — connecting a heavier Nutrition log or a skipped Activity entry back to something more specific.
+Stress won't show up on every day's log, and it doesn't need to. On the days it does, it tends to explain a lot — connecting a heavier Nutrition log or a skipped Activity entry back to something more specific than willpower.

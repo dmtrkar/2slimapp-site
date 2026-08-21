@@ -6,9 +6,9 @@ const articles = (await getCollection('articles')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
 ---
-<BaseLayout title="Главная">
-  <h1>Блог 2Slim</h1>
-  <p>Статьи о привычках, похудении без диет и том, что реально работает.</p>
+<BaseLayout title="Home">
+  <h1>2Slim Blog</h1>
+  <p>Articles on habits, diet-free weight loss, and what actually works.</p>
   <ul class="article-list">
     {articles.map((article) => (
       <li>

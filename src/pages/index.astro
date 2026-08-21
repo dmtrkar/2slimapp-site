@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const articles = (await getCollection('articles')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+<BaseLayout title="Главная">
+  <h1>Блог 2Slim</h1>
+  <p>Статьи о привычках, похудении без диет и том, что реально работает.</p>
+  <ul class="article-list">
+    {articles.map((article) => (
+      <li>
+        <a href={`/${article.data.slug}/`}>
+          <h2>{article.data.title}</h2>
+          {article.data.description && <p>{article.data.description}</p>}
+        </a>
+      </li>
+    ))}
+  </ul>
+  <style>
+    .article-list { list-style: none; padding: 0; }
+    .article-list li { padding: 1.25rem 0; border-bottom: 1px solid #e7e2d8; }
+    .article-list a { text-decoration: none; color: inherit; }
+    .article-list h2 { margin: 0 0 0.35rem; color: var(--ink); }
+    .article-list p { margin: 0; color: var(--muted); }
+  </style>
+</BaseLayout>
